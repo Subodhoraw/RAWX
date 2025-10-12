@@ -13,7 +13,7 @@ def calculate_hash(data):
     hash_object = hashlib.sha256(data_bytes)#creates a SHA-256 hash object
     return hash_object.hexdigest()#returns the hexadecimal representation of the hash
 
-#transaction Class
+#2 transaction Class
 class Transaction:
     """ 
       Represents money moving to one person to another person
@@ -35,4 +35,31 @@ class Transaction:
 
 # --- IGNORE ---
 def __str__(self):
-    return f"{self.sender} "
+    return f"{self.sender} ->{self.reciver}:{self.amount} at {datetime.fromtimestamp(self.timestamp)}"
+
+
+#3 block class
+
+class Block:
+    """ a block is container data for transaction
+    each block is linked to the previous block in the chain by including the previous block's hash
+    """
+    def __init__(self,transactions,previous_hash =''):
+        self.timestamp = time.time() #the timestamp of the block
+        self.transactions = transactions #the list of transactions in the block
+        self.previous_hash = previous_hash #the hash of the previous block in the chain
+        self.nonce = 0 #the nonce is a number that is used to vary the hash of the block
+        self.hash = self.calculate_hash()#the hash of the block
+
+    def calculate_hash(self):
+        """calculates the SHA-256 hash of the world state of the block
+        """
+        block_data ={
+            'timestamp':self.timestamp,
+            'transactions':[tx.to_dict() for tx in self.transactions],
+            'previous_hash':self.previous_hash,
+            'nonce':self.nonce
+        }
+        return calculate_hash(block_data)
+    
+        
