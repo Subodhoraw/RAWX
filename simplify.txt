@@ -1,0 +1,22 @@
+Best for: Simple Token Wallet & Transfer System
+What it does ?
+We going to create our own cryptocurrency token with wallet system where users can send/recive tokens.
+
+concepts we will learn
+**Blockchain basics(blocks,chains,hashing)
+**Digital signature & public/private keys
+**transaction validation
+** wallet management
+
+***How it will works 
+1. Users create wallets(public/private key pairs)
+2. Initial tokens are minted to genesis wallet3.Users can transfer tokens tokens to each other 
+3.Users can transfer tokens to Each other
+4.All transactions are recorded in blocks
+5. Blockchain validates all transections 
+
+****Tech Stack
+Language: Python 
+Libraries: haslib for SHA-256 hashing
+crptography or ecdsa
+time for timestamps 
