@@ -62,4 +62,29 @@ class Block:
         }
         return calculate_hash(block_data)
     
-        
+    def mine_block(self, difficulty):
+        """mining: Find a nonce that makes hash start with 'difficulty' zeros
+        Example : difficulty = 4 -> hash starts with '0000'
+        """
+        target = 'o' * difficulty #the target hash prefix
+        print(f"mining block....(need hash starting with '{target}'")
+
+        while not self.hash.startswith(target): #keep trying until we find a hash that starts with the target prefix
+            self.nonce += 1 #increment the nonce
+            self.hash = self.calculate_hash() #recalculate the hash
+
+            #show progress every 10000 attempts
+            if self.nonce%10000 == 0:
+                print(f"Tried{self.nonce} times... Current hash:{self.hash[:20]}...")
+        print(f"Block mined! Nonce:{self.nonce}, Hash:{self.hash}")
+# --- IGNORE ---
+    def __str__(self):
+        tx_list = "\n  ".join([str(tx) for tx in self.transactions])
+        return f"""
+Block hash:{self.hash}
+Previous hash:{self.previous_hash}
+Timestamp:{datetime.fromtimestamp(self.timestamp)}
+Transactions:
+  {tx_list}
+Nonce:{self.nonce}
+        """
