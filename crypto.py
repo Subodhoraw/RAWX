@@ -88,3 +88,44 @@ Transactions:
   {tx_list}
 Nonce:{self.nonce}
         """
+    
+##PART 4: BLOCKCHAIN CLASS
+# ============================================
+
+class Blockchain:
+    """
+    The main blockchain - a chain of blocks
+    Manages transactions, balances, and mining
+    """
+    def __init__(self):
+        self.chain = [self.create_genesis_block()]
+        self.difficulty = 4  # How many leading zeros needed in hash
+        self.pending_transactions = []
+        self.mining_reward = 10
+        self.balances = {}
+    
+    def create_genesis_block(self):
+        """
+        The first block in the chain
+        Has no previous hash (starts the chain)
+        """
+        print("🌟 Creating Genesis Block...")
+        genesis_tx = Transaction("SYSTEM", "GENESIS", 0)
+        return Block([genesis_tx], "0")
+    
+    def get_latest_block(self):
+        """Get the most recent block in the chain"""
+        return self.chain[-1]
+    
+    def add_transaction(self, transaction):
+        """
+        Add a transaction to pending transactions
+        Validates sender has enough balance
+        """
+        # Check if sender has enough balance (except for system transactions)
+        if transaction.sender != "SYSTEM" and transaction.sender != "MINING_REWARD":
+            sender_balance = self.get_balance(transaction.sender)
+            if sender_balance < transaction.amount:
+                print(f"❌ Transaction rejected: {transaction.sender} has insufficient balance")
+                print(f"   Balance: {sender_balance}, Needed: {transaction.amount}")
+                return False
