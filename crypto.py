@@ -115,8 +115,7 @@ class Blockchain:
     
     def get_latest_block(self):
         """Get the most recent block in the chain"""
-        return self.chain[-1]
-    
+        return self.chain[-1] 
     def add_transaction(self, transaction):
         """
         Add a transaction to pending transactions
